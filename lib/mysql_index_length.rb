@@ -18,11 +18,11 @@ module ActiveRecord
       end
     end
   end
-  
+
   module ConnectionAdapters # :nodoc:
     class IndexDefinition < Struct.new(:table, :name, :unique, :columns,:limits) #:nodoc:
     end
-    
+
     class MysqlAdapter < AbstractAdapter
       def indexes(table_name, name = nil)#:nodoc:
         indexes = []
@@ -42,7 +42,7 @@ module ActiveRecord
         indexes
       end
     end
-    
+
     module SchemaStatements
       def add_index(table_name, column_name, options = {})
         column_names = Array(column_name)
@@ -52,7 +52,7 @@ module ActiveRecord
           index_type = options[:unique] ? "UNIQUE" : ""
           index_name = options[:name] || index_name
           if Hash === options[:limit]
-            quoted_column_names = column_names.map {|e| (options[:limit][e.to_sym].nil? ? "#{quote_column_name(e)}" : "#{quote_column_name(e)}(#{options[:limit][e.to_sym]})") }.join(", ")
+            quoted_column_names = column_names.map {|e| (options[:limit][e.to_s].nil? ? "#{quote_column_name(e)}" : "#{quote_column_name(e)}(#{options[:limit][e.to_s]})") }.join(", ")
           elsif options[:limit]
             quoted_column_names = column_names.map {|e| "#{quote_column_name(e)}(#{options[:limit]})"}.join(", ")
           end
